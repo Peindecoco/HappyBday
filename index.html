@@ -323,9 +323,132 @@
       }
 
       @media (max-width: 900px) {
+        body {
+          padding: 16px;
+        }
+
         .landing-grid,
         .popup-grid {
           grid-template-columns: 1fr;
+        }
+
+        .popup-wrap {
+          width: 100%;
+        }
+
+        .mini-nav {
+          display: none;
+        }
+      }
+
+      @media (max-width: 600px) {
+        body {
+          padding: 10px;
+        }
+
+        .landing {
+          border-width: 3px;
+          border-radius: 18px;
+          padding: 14px;
+        }
+
+        h1 {
+          font-size: 1.85rem;
+          line-height: 1.16;
+        }
+
+        .lead {
+          font-size: 0.95rem;
+        }
+
+        .chips {
+          gap: 8px;
+        }
+
+        .chip {
+          font-size: 0.84rem;
+          padding: 5px 10px;
+        }
+
+        .open-btn,
+        .gift-btn {
+          border-width: 2px;
+          border-radius: 12px;
+        }
+
+        .open-btn {
+          width: 100%;
+          box-shadow: 0 6px 0 #997fba;
+        }
+
+        .gift-btn {
+          padding: 12px;
+        }
+
+        .gift-emoji {
+          font-size: 3.4rem;
+        }
+
+        .overlay {
+          padding: 0;
+        }
+
+        .popup-wrap {
+          width: 100%;
+          height: 100%;
+        }
+
+        .popup {
+          border-width: 0;
+          border-radius: 0;
+          min-height: 100dvh;
+        }
+
+        .winbar {
+          padding: 10px;
+        }
+
+        .popup-grid {
+          padding: 14px;
+          gap: 10px;
+        }
+
+        .panel,
+        .cake-card,
+        .note-card {
+          border-width: 2px;
+          border-radius: 12px;
+          padding: 12px;
+        }
+
+        .panel-title {
+          font-size: 0.74rem;
+        }
+
+        .popup h2 {
+          font-size: 1.8rem;
+          line-height: 1.14;
+        }
+
+        .message {
+          font-size: 0.95rem;
+        }
+
+        .tag {
+          font-size: 0.82rem;
+          padding: 4px 9px;
+        }
+
+        .cake {
+          font-size: 4rem;
+        }
+
+        .close-btn {
+          right: 8px;
+          top: 8px;
+          z-index: 2;
+          border-width: 2px;
+          background: #ffffffea;
         }
       }
     </style>
@@ -370,7 +493,7 @@
               <span class="panel-title">🎉🎉🎉</span>
               <h2 id="popupTitle">HAPPY HAPPY BIRTHDAY!!</h2>
               <p class="message">
-                Happy happy birthday, I know na I have said this a lot pero I really do appreciate what you have done for me, thank you din sa memories na binigay mo saamin. 
+                Happy happy birthday, I know na I have said this a lot pero I really do appreciate what you have done for me, thank you din sa memories na binigay mo saamin.
                 I am glad na I got to be one of your friends and I wish you a belated happy birthday and hope you growup happily and hindi na laging stressed HWAHAHAHHAHAHA HAPPY BDAY TONETCH!!
               </p>
             </section>
