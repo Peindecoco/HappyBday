@@ -163,10 +163,16 @@
         display: grid;
         place-items: center;
         padding: 24px;
-        background: rgba(35, 22, 49, 0.46);
+        background: linear-gradient(165deg, var(--bg), var(--bg-deep));
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.25s ease;
+      }
+
+      .popup-active .landing {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
       }
 
       .overlay.open {
@@ -400,11 +406,13 @@
 
       function openPopup() {
         popup.classList.add("open");
+        document.body.classList.add("popup-active");
         popup.setAttribute("aria-hidden", "false");
       }
 
       function closePopup() {
         popup.classList.remove("open");
+        document.body.classList.remove("popup-active");
         popup.setAttribute("aria-hidden", "true");
       }
 
