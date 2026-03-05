@@ -1,1 +1,293 @@
-yes
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birthday Popup Surprise</title>
+    <style>
+      :root {
+        --mint: #b7eec8;
+        --mint-dark: #93d8a9;
+        --paper: #f8f8f3;
+        --ink: #3e2a56;
+        --lavender: #dbc8ea;
+        --pink: #f2b6d8;
+        --yellow: #f8e47f;
+        --line: #70528d;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Trebuchet MS", "Verdana", sans-serif;
+        background: radial-gradient(circle at top, #c9f5d7, var(--mint));
+        display: grid;
+        place-items: center;
+        color: var(--ink);
+        padding: 24px;
+      }
+
+      .launcher {
+        border: 3px solid var(--line);
+        border-radius: 14px;
+        background: var(--paper);
+        color: var(--ink);
+        padding: 14px 22px;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        cursor: pointer;
+        box-shadow: 0 10px 0 #8f76ac;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .launcher:hover {
+        transform: translateY(-2px);
+      }
+
+      .launcher:active {
+        transform: translateY(4px);
+        box-shadow: 0 4px 0 #8f76ac;
+      }
+
+      .overlay {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: rgba(41, 30, 54, 0.35);
+        padding: 24px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+      }
+
+      .overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .card {
+        width: min(860px, 100%);
+        background: var(--paper);
+        border: 4px solid var(--line);
+        border-radius: 18px;
+        box-shadow: 0 16px 35px rgba(43, 22, 58, 0.28);
+        overflow: hidden;
+        transform: scale(0.92);
+        transition: transform 0.25s ease;
+      }
+
+      .overlay.open .card {
+        transform: scale(1);
+      }
+
+      .bar {
+        background: #ebe6ef;
+        border-bottom: 3px solid #b9a8cd;
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid #9f8eb4;
+      }
+
+      .dot:nth-child(1) { background: #ffd9df; }
+      .dot:nth-child(2) { background: #fff3ba; }
+      .dot:nth-child(3) { background: #c9f4d4; }
+
+      .content {
+        display: grid;
+        grid-template-columns: 1fr 240px;
+        gap: 16px;
+        padding: 26px;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(1.8rem, 5vw, 3rem);
+        line-height: 1.05;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .tag {
+        display: inline-block;
+        margin-bottom: 12px;
+        font-size: 0.9rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .message {
+        margin: 0;
+        max-width: 48ch;
+        line-height: 1.55;
+      }
+
+      .decor {
+        margin-top: 18px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .pill {
+        border: 2px solid var(--line);
+        border-radius: 999px;
+        background: #ffffff;
+        padding: 5px 12px;
+        font-weight: 700;
+      }
+
+      .cake-box {
+        border: 3px solid var(--line);
+        border-radius: 14px;
+        background: linear-gradient(180deg, #f5effa, #efe7f7);
+        padding: 16px;
+        display: grid;
+        place-items: center;
+        gap: 10px;
+      }
+
+      .cake {
+        font-size: 4.4rem;
+        line-height: 1;
+      }
+
+      .ok {
+        border: 2px solid var(--line);
+        border-radius: 10px;
+        background: #fff;
+        padding: 5px 16px;
+        font-weight: 700;
+      }
+
+      .balloons {
+        position: absolute;
+        left: 18px;
+        bottom: 18px;
+        display: flex;
+        gap: 6px;
+      }
+
+      .balloons span {
+        width: 26px;
+        height: 36px;
+        border: 2px solid var(--line);
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      .balloons span:nth-child(1) { background: var(--yellow); }
+      .balloons span:nth-child(2) { background: var(--pink); }
+      .balloons span:nth-child(3) { background: var(--mint-dark); }
+
+      .close {
+        position: absolute;
+        right: 18px;
+        top: 16px;
+        border: 2px solid var(--line);
+        background: #fff;
+        border-radius: 10px;
+        font-weight: 700;
+        cursor: pointer;
+        padding: 6px 10px;
+      }
+
+      .card-shell {
+        position: relative;
+      }
+
+      @media (max-width: 730px) {
+        .content {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button class="launcher" id="openBtn">🎉 Open Birthday Surprise</button>
+
+    <section class="overlay" id="popup" aria-hidden="true">
+      <div class="card-shell">
+        <button class="close" id="closeBtn" aria-label="Close popup">✕</button>
+        <article class="card" role="dialog" aria-modal="true" aria-labelledby="title">
+          <div class="bar">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+          <div class="content">
+            <div>
+              <span class="tag">This weekend</span>
+              <h1 id="title">Celebrating your birthday!</h1>
+              <p class="message">
+                Happy Birthday, bestie! 💖
+                Wishing you a year full of laughter, adventure, sweet surprises,
+                and every dream you’re working for. You deserve all the joy today
+                and always.
+              </p>
+              <div class="decor">
+                <span class="pill">🎈 Party Mode</span>
+                <span class="pill">✨ Make a Wish</span>
+                <span class="pill">🎂 Cake Time</span>
+              </div>
+            </div>
+
+            <div class="cake-box">
+              <div class="cake" aria-hidden="true">🎂</div>
+              <span class="ok">OK</span>
+            </div>
+          </div>
+        </article>
+        <div class="balloons" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const popup = document.getElementById("popup");
+      const openBtn = document.getElementById("openBtn");
+      const closeBtn = document.getElementById("closeBtn");
+
+      function openPopup() {
+        popup.classList.add("open");
+        popup.setAttribute("aria-hidden", "false");
+      }
+
+      function closePopup() {
+        popup.classList.remove("open");
+        popup.setAttribute("aria-hidden", "true");
+      }
+
+      openBtn.addEventListener("click", openPopup);
+      closeBtn.addEventListener("click", closePopup);
+
+      popup.addEventListener("click", (event) => {
+        if (event.target === popup) {
+          closePopup();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closePopup();
+        }
+      });
+    </script>
+  </body>
+</html>
